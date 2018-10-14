@@ -126,10 +126,10 @@ flags.DEFINE_string(
           "(default, interleaved train & eval)."))
 
 # Dataset constants
-_LABEL_CLASSES = 1001
+_LABEL_CLASSES = 15
 _NUM_CHANNELS = 3
-_NUM_TRAIN_IMAGES = 1281167
-_NUM_EVAL_IMAGES = 50000
+_NUM_TRAIN_IMAGES = 73059
+_NUM_EVAL_IMAGES = 18265
 _MOMENTUM = 0.9
 _WEIGHT_DECAY = 1e-4
 

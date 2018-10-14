@@ -173,7 +173,7 @@ def densenet_imagenet_model(image, k, depths, num_classes, is_training=True):
   return logits
 
 
-def densenet_imagenet_121(inputs, is_training=True, num_classes=1001):
+def densenet_imagenet_121(inputs, is_training=True, num_classes=15):
   """DenseNet 121."""
   depths = [6, 12, 24, 16]
   growth_rate = 32
@@ -181,7 +181,7 @@ def densenet_imagenet_121(inputs, is_training=True, num_classes=1001):
                                  is_training)
 
 
-def densenet_imagenet_169(inputs, is_training=True, num_classes=1001):
+def densenet_imagenet_169(inputs, is_training=True, num_classes=15):
   """DenseNet 121."""
   depths = [6, 12, 32, 32]
   growth_rate = 32
@@ -189,7 +189,7 @@ def densenet_imagenet_169(inputs, is_training=True, num_classes=1001):
                                  is_training)
 
 
-def densenet_imagenet_201(inputs, is_training=True, num_classes=1001):
+def densenet_imagenet_201(inputs, is_training=True, num_classes=15):
   """DenseNet 121."""
   depths = [6, 12, 48, 32]
   growth_rate = 32
