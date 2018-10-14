@@ -28,7 +28,6 @@ from official.resnet import imagenet_input
 from official.resnet import lars_util
 from official.resnet import resnet_model
 from tensorflow.contrib import summary
-from tensorflow.contrib.tpu.python.tpu import async_checkpoint
 from tensorflow.contrib.training.python.training import evaluation
 from tensorflow.python.estimator import estimator
 
@@ -213,9 +212,6 @@ flags.DEFINE_float('poly_rate', default=0.0,
 
 flags.DEFINE_bool(
     'use_cache', default=True, help=('Enable cache for training input.'))
-
-flags.DEFINE_bool(
-    'use_async_checkpointing', default=False, help=('Enable async checkpoint'))
 
 # Learning rate schedule
 LR_SCHEDULE = [    # (multiplier, epoch to start) tuples
@@ -512,10 +508,7 @@ def main(unused_argv):
       zone=FLAGS.tpu_zone,
       project=FLAGS.gcp_project)
 
-  if FLAGS.use_async_checkpointing:
-    save_checkpoints_steps = None
-  else:
-    save_checkpoints_steps = max(100, FLAGS.iterations_per_loop)
+  save_checkpoints_steps = max(100, FLAGS.iterations_per_loop)
   config = tf.contrib.tpu.RunConfig(
       cluster=tpu_cluster_resolver,
       model_dir=FLAGS.model_dir,
@@ -614,11 +607,7 @@ def main(unused_argv):
 
     if FLAGS.mode == 'train':
       hooks = []
-      if FLAGS.use_async_checkpointing:
-        hooks.append(
-            async_checkpoint.AsyncCheckpointSaverHook(
-                checkpoint_dir=FLAGS.model_dir,
-                save_steps=max(100, FLAGS.iterations_per_loop)))
+
       resnet_classifier.train(
           input_fn=imagenet_train.input_fn,
           max_steps=FLAGS.train_steps,
