@@ -175,8 +175,7 @@ class ImageNetInput(object):
 
     parsed = tf.parse_single_example(value, keys_to_features)
 
-    image = tf.image.decode_image(
-        tf.reshape(parsed["image/encoded"], shape=[]), _NUM_CHANNELS)
+    image = tf.reshape(parsed["image/encoded"], shape=[])
 
     # TODO(shivaniagrawal): height and width of image from model
     image = vgg_preprocessing.preprocess_image(
