@@ -168,6 +168,7 @@ class ImageNetInput(object):
   def dataset_parser(self, value):
     """Parse an Imagenet record from value."""
     keys_to_features = {
+        'image/encoded': tf.FixedLenFeature((), tf.string, ''),
         'image/format': tf.FixedLenFeature((), tf.string, 'png'),
         'image/class/label': tf.FixedLenFeature([], tf.int64, -1)
     }
