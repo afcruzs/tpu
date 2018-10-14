@@ -177,7 +177,6 @@ class ImageNetInput(object):
 
     image = tf.image.decode_image(
         tf.reshape(parsed["image/encoded"], shape=[]), _NUM_CHANNELS)
-    image = tf.image.convert_image_dtype(image, dtype=tf.float32)
 
     # TODO(shivaniagrawal): height and width of image from model
     image = vgg_preprocessing.preprocess_image(
@@ -188,7 +187,8 @@ class ImageNetInput(object):
 
     label = tf.cast(
         tf.reshape(parsed["image/class/label"], shape=[]), dtype=tf.int32)
-
+    
+    image = tf.image.convert_image_dtype(image, dtype=tf.float32)
     return image, tf.one_hot(label, _LABEL_CLASSES)
 
   def __call__(self, params):
