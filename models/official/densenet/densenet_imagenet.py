@@ -168,15 +168,8 @@ class ImageNetInput(object):
   def dataset_parser(self, value):
     """Parse an Imagenet record from value."""
     keys_to_features = {
-        "image/encoded": tf.FixedLenFeature((), tf.string, ""),
-        "image/format": tf.FixedLenFeature((), tf.string, "jpeg"),
-        "image/class/label": tf.FixedLenFeature([], tf.int64, -1),
-        "image/class/text": tf.FixedLenFeature([], tf.string, ""),
-        "image/object/bbox/xmin": tf.VarLenFeature(dtype=tf.float32),
-        "image/object/bbox/ymin": tf.VarLenFeature(dtype=tf.float32),
-        "image/object/bbox/xmax": tf.VarLenFeature(dtype=tf.float32),
-        "image/object/bbox/ymax": tf.VarLenFeature(dtype=tf.float32),
-        "image/object/class/label": tf.VarLenFeature(dtype=tf.int64),
+        'image/format': tf.FixedLenFeature((), tf.string, 'png'),
+        'image/class/label': tf.FixedLenFeature([], tf.int64, -1)
     }
 
     parsed = tf.parse_single_example(value, keys_to_features)
@@ -188,8 +181,8 @@ class ImageNetInput(object):
     # TODO(shivaniagrawal): height and width of image from model
     image = vgg_preprocessing.preprocess_image(
         image=image,
-        output_height=224,
-        output_width=224,
+        output_height=1024,
+        output_width=1024,
         is_training=self.is_training)
 
     label = tf.cast(
@@ -238,7 +231,7 @@ class ImageNetInput(object):
   def _input_fn_null(self, params):
     """Input function which provides null (black) images."""
     batch_size = params["batch_size"]
-    null_image = tf.zeros([224, 224, 3], tf.float32)
+    null_image = tf.zeros([1024, 1024, 3], tf.float32)
     null_label = tf.one_hot(tf.constant(0, tf.int32), _LABEL_CLASSES)
     dataset = tf.data.Dataset.from_tensors((null_image, null_label))
     dataset = dataset.repeat(batch_size).batch(batch_size, drop_remainder=True)

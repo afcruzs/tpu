@@ -41,6 +41,10 @@ _B_MEAN = 103.94 / 255
 _RESIZE_SIDE_MIN = 256
 _RESIZE_SIDE_MAX = 512
 
+def _decode(image_bytes):
+  image = tf.image.decode_png(image_bytes)
+  return image
+
 
 def _crop(image, offset_height, offset_width, crop_height, crop_width):
   """Crops the given image using the provided offsets and sizes.
@@ -326,11 +330,10 @@ def preprocess_for_eval(image, output_height, output_width, resize_side):
   Returns:
     A preprocessed image.
   """
-  image = _aspect_preserving_resize(image, resize_side)
-  image = _central_crop([image], output_height, output_width)[0]
+  image = _decode(image)
   image.set_shape([output_height, output_width, 3])
   image = tf.to_float(image)
-  return _mean_image_subtraction(image, [_R_MEAN, _G_MEAN, _B_MEAN])
+  return image
 
 
 def preprocess_image(image, output_height, output_width, is_training=False,
