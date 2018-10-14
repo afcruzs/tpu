@@ -82,6 +82,11 @@ def _at_least_x_are_equal(a, b, x):
   return tf.greater_equal(tf.reduce_sum(match), x)
 
 
+def _decode(image_bytes, image_size):
+  image = tf.image.decode_png(image_bytes)
+  return image
+
+
 def _decode_and_random_crop(image_bytes, image_size):
   """Make a random crop of image_size."""
   bbox = tf.constant([0.0, 0.0, 1.0, 1.0], dtype=tf.float32, shape=[1, 1, 4])
@@ -143,7 +148,7 @@ def preprocess_for_train(image_bytes, use_bfloat16, image_size=IMAGE_SIZE):
   Returns:
     A preprocessed image `Tensor`.
   """
-  image = _decode_and_random_crop(image_bytes, image_size)
+  image = _decode(image_bytes, image_size)
   image = _flip(image)
   image = tf.reshape(image, [image_size, image_size, 3])
   image = tf.image.convert_image_dtype(
@@ -162,7 +167,7 @@ def preprocess_for_eval(image_bytes, use_bfloat16, image_size=IMAGE_SIZE):
   Returns:
     A preprocessed image `Tensor`.
   """
-  image = _decode_and_center_crop(image_bytes, image_size)
+  image = _decode(image_bytes, image_size)
   image = tf.reshape(image, [image_size, image_size, 3])
   image = tf.image.convert_image_dtype(
       image, dtype=tf.bfloat16 if use_bfloat16 else tf.float32)
