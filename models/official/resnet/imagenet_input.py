@@ -59,7 +59,7 @@ class ImageNetTFExampleInput(object):
                is_training,
                use_bfloat16,
                num_cores=8,
-               image_size=224,
+               image_size=1024,
                transpose_input=False):
     self.image_preprocessing_fn = resnet_preprocessing.preprocess_image
     self.is_training = is_training
@@ -204,7 +204,7 @@ class ImageNetInput(ImageNetTFExampleInput):
                use_bfloat16,
                transpose_input,
                data_dir,
-               image_size=224,
+               image_size=1024,
                num_parallel_calls=64,
                cache=False):
     """Create an input from TFRecord files.
