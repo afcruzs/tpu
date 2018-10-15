@@ -155,6 +155,10 @@ def densenet_imagenet_model(image, k, depths, num_classes, is_training=True):
   )
   v = tf.nn.relu(v)
   v = tf.layers.max_pooling2d(v, pool_size=3, strides=2, padding="same")
+  v = tf.layers.conv2d(v, filters=8, kernel_size=[3,3], padding="same")
+  v = v = tf.layers.max_pooling2d(v, pool_size=3, strides=2, padding="same")
+  v = tf.layers.conv2d(v, filters=8, kernel_size=[3,3], padding="same")
+  v = v = tf.layers.max_pooling2d(v, pool_size=3, strides=2, padding="same")
   for i, depth in enumerate(depths):
     with tf.variable_scope("block-%d" % i):
       for j in range(depth):
