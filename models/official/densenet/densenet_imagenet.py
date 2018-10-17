@@ -134,7 +134,7 @@ _MOMENTUM = 0.9
 _WEIGHT_DECAY = 1e-4
 
 # Learning hyperaparmeters
-_BASE_LR = 0.0001
+_BASE_LR = 0.00005
 _LR_SCHEDULE = [  # (LR multiplier, epoch to start)
     (1.0 / 6, 0), (2.0 / 6, 1), (3.0 / 6, 2), (4.0 / 6, 3), (0.1, 30), (0.01, 60), (0.001, 80), (0.0001, 90)
 ]
