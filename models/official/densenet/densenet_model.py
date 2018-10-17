@@ -142,7 +142,7 @@ def densenet_imagenet_model(image, k, depths, num_classes, is_training=True):
   """Construct a DenseNet with the specified growth size and layers."""
 
   num_channels = 2 * k
-  v = tf.layers.conv2d(image, filters=8, kernel_size=9, strides=4, use_bias=False, padding="same")
+  v = tf.layers.conv2d(image, filters=32, kernel_size=9, strides=4, use_bias=False, padding="same")
   v = tf.nn.relu(v)
   v = conv(v, filters=2 * k, strides=2, kernel_size=7)
   v = tf.layers.batch_normalization(
