@@ -431,6 +431,8 @@ def resnet_model_fn(features, labels, mode, params):
       """
       predictions = tf.argmax(logits, axis=1)
       top_1_accuracy = tf.metrics.accuracy(labels, predictions)
+      print(logits)
+      print(labels)
       in_top_5 = tf.cast(tf.nn.in_top_k(logits, labels, 1), tf.float32)
       top_5_accuracy = tf.metrics.mean(in_top_5)
 
